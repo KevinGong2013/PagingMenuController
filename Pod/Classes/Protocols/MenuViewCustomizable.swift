@@ -46,7 +46,7 @@ public extension MenuViewCustomizable {
         return .standard(widthMode: .flexible, centerItem: false, scrollingMode: .pagingEnabled)
     }
     var focusMode: MenuFocusMode {
-        return .underline(height: 3, color: UIColor.blue, horizontalPadding: 0, verticalPadding: 0)
+        return .underline(size: CGSize(width: 50, height: 1.5), color: UIColor.blue)
     }
     var dummyItemViewsSet: Int {
         return 3
@@ -78,7 +78,7 @@ public enum MenuScrollingMode {
 
 public enum MenuFocusMode {
     case none
-    case underline(height: CGFloat, color: UIColor, horizontalPadding: CGFloat, verticalPadding: CGFloat)
+    case underline(size: CGSize, color: UIColor)
     case roundRect(radius: CGFloat, horizontalPadding: CGFloat, verticalPadding: CGFloat, selectedColor: UIColor)
 }
 

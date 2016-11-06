@@ -263,10 +263,11 @@ open class MenuView: UIScrollView {
     }
     
     fileprivate func setupUnderlineViewIfNeeded() {
-        guard case let .underline(height, color, horizontalPadding, verticalPadding) = menuOptions.focusMode else { return }
-        
-        let width = menuItemViews[currentPage].bounds.width - horizontalPadding * 2
-        underlineView.frame = CGRect(x: horizontalPadding, y: menuOptions.height - (height + verticalPadding), width: width, height: height)
+        guard case let .underline(size, color) = menuOptions.focusMode else { return }
+
+        let y = menuOptions.height - size.height
+
+        underlineView.frame = CGRect(origin: CGPoint(x: 0, y: y), size: size)
         underlineView.backgroundColor = color
         contentView.addSubview(underlineView)
     }
@@ -282,11 +283,11 @@ open class MenuView: UIScrollView {
     }
     
     fileprivate func animateUnderlineViewIfNeeded() {
-        guard case .underline(_, _, let horizontalPadding, _) = menuOptions.focusMode else { return }
+        guard case .underline(let size, _) = menuOptions.focusMode else { return }
         
         let targetFrame = menuItemViews[currentPage].frame
-        underlineView.frame.origin.x = targetFrame.minX + horizontalPadding
-        underlineView.frame.size.width = targetFrame.width - horizontalPadding * 2
+        underlineView.frame.origin.x = targetFrame.minX
+        underlineView.frame.size.width = size.width
     }
     
     fileprivate func animateRoundRectViewIfNeeded() {
