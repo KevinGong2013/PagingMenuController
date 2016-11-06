@@ -286,7 +286,7 @@ open class MenuView: UIScrollView {
         guard case .underline(let size, _) = menuOptions.focusMode else { return }
         
         let targetFrame = menuItemViews[currentPage].frame
-        underlineView.frame.origin.x = targetFrame.minX
+        underlineView.frame.origin.x = targetFrame.minX + (targetFrame.width - size.width) / 2
         underlineView.frame.size.width = size.width
     }
     
