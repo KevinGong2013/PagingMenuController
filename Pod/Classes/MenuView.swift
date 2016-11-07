@@ -253,6 +253,7 @@ open class MenuView: UIScrollView {
             
             // V:|[menuItemView]|
             NSLayoutConstraint.activate([
+                menuItemView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / CGFloat(menuOptions.itemsOptions.count)),
                 menuItemView.topAnchor.constraint(equalTo: contentView.topAnchor),
                 menuItemView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
                 ])

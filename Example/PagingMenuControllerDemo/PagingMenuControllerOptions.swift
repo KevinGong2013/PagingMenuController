@@ -121,7 +121,7 @@ struct PagingMenuOptions4: PagingMenuControllerCustomizable {
             return .segmentedControl
         }
         var focusMode: MenuFocusMode {
-            return .underline(height: 3, color: UIColor.blue, horizontalPadding: 10, verticalPadding: 0)
+            return .underline(size: CGSize(width: 20, height: 1.5), color: UIColor.blue)
         }
         var itemsOptions: [MenuItemViewCustomizable] {
             return [MenuItemUsers(), MenuItemRepository(), MenuItemGists(), MenuItemOrganization()]
