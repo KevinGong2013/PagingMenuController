@@ -11,8 +11,8 @@ import UIKit
 open class MenuView: UIScrollView {
     public fileprivate(set) var currentMenuItemView: MenuItemView!
     
-    weak internal var viewDelegate: PagingMenuControllerDelegate?
     internal fileprivate(set) var menuItemViews = [MenuItemView]()
+    internal var onMove: ((MenuMoveState) -> Void)?
     
     fileprivate var menuOptions: MenuViewCustomizable!
     fileprivate var sortedMenuItemViews = [MenuItemView]()
@@ -115,7 +115,7 @@ open class MenuView: UIScrollView {
         
         if let previousMenuItemView = previousMenuItemView,
             page != previousPage {
-            viewDelegate?.willMove(toMenuItem: menuItemView, fromMenuItem: previousMenuItemView)
+            onMove?(.willMoveItem(to: menuItemView, from: previousMenuItemView))
         }
         
         update(currentPage: page)
@@ -146,7 +146,7 @@ open class MenuView: UIScrollView {
             
             if let previousMenuItemView = previousMenuItemView,
                 page != previousPage {
-                self!.viewDelegate?.didMove(toMenuItem: self!.currentMenuItemView, fromMenuItem: previousMenuItemView)
+                self!.onMove?(.didMoveItem(to: self!.currentMenuItemView, from: previousMenuItemView))
             }
         }
     }
@@ -360,7 +360,7 @@ extension MenuView: Pagable {
     }
 }
 
-extension MenuView: ViewCleanable {
+extension MenuView {
     func cleanup() {
         contentView.removeFromSuperview()
         switch menuOptions.focusMode {
@@ -378,14 +378,14 @@ extension MenuView: ViewCleanable {
     }
 }
 
-extension MenuView: MenuItemMultipliable {
+extension MenuView {
     var menuItemCount: Int {
         switch menuOptions.displayMode {
         case .infinite: return menuOptions.itemsOptions.count * menuOptions.dummyItemViewsSet
         default: return menuOptions.itemsOptions.count
         }
     }
-    func rawPage(_ page: Int) -> Int {
+    fileprivate func rawPage(_ page: Int) -> Int {
         let startIndex = currentPage - menuItemCount / 2
         return (startIndex + page + menuItemCount) % menuItemCount
     }
